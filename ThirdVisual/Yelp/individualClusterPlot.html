@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+.node circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+.btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+    background-color: #3e8e41;
+}
+
+</style>
+
+<body>
+
+<div class="btn-group" style="width:100%">
+  <button onclick="myFunc0()" style="width:3%">0</button>
+  <button onclick="myFunc1()" style="width:3%">1</button>
+  <button onclick="myFunc2()" style="width:3%">2</button>
+  <button onclick="myFunc3()" style="width:3%">3</button>
+  <button onclick="myFunc4()" style="width:3%">4</button>
+  <button onclick="myFunc5()" style="width:3%">5</button>
+  <button onclick="myFunc6()" style="width:3%">6</button>
+  <button onclick="myFunc7()" style="width:3%">7</button>
+  <button onclick="myFunc8()" style="width:3%">8</button>
+  <button onclick="myFunc9()" style="width:3%">9</button>
+  <button onclick="myFunc10()" style="width:3%">10</button>
+  <button onclick="myFunc11()" style="width:3%">11</button>
+  <button onclick="myFunc12()" style="width:3%">12</button>
+  <button onclick="myFunc13()" style="width:3%">13</button>
+  <button onclick="myFunc14()" style="width:3%">14</button>
+  <button onclick="myFunc15()" style="width:3%">15</button>
+  <button onclick="myFunc16()" style="width:3%">16</button>
+  <button onclick="myFunc17()" style="width:3%">17</button>
+  <button onclick="myFunc18()" style="width:3%">18</button>
+  <button onclick="myFunc19()" style="width:3%">19</button>
+  <button onclick="myFunc20()" style="width:3%">20</button>
+  <button onclick="myFunc21()" style="width:3%">21</button>
+  <button onclick="myFunc22()" style="width:3%">22</button>
+  <button onclick="myFunc23()" style="width:3%">23</button>
+  <button onclick="myFunc24()" style="width:3%">24</button>
+  <button onclick="myFunc25()" style="width:3%">25</button>
+  <button onclick="myFunc26()" style="width:3%">26</button>
+  <button onclick="myFunc27()" style="width:3%">27</button>
+  <button onclick="myFunc28()" style="width:3%">28</button>
+  <button onclick="myFunc29()" style="width:3%">29</button>
+  <button onclick="myFunc30()" style="width:3%">30</button>
+</div>
+
+</body>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+
+  var colorMap = {
+  "PYP1NhV2mbk3YIMMmRIeQw":"rgb(145,128,76)",
+  "Fn-5RiansziHPYC4e2qX-w":"rgb(191,143,27)",
+  "NRCYMfQsDP8TBv3jDVXUdw":"rgb(99,217,32)",
+  "5mqDpUiqKBePIC9UZ2G5Dw":"rgb(248,51,89)",
+  "58yx7GY7Pbqzj5VFRzrs3g":"rgb(108,192,220)",
+  "r3hmpTrS7My8i8M0GbAgxQ":"rgb(36,76,244)",
+  "z2mzWeWTo7pvGkYFx9_zIw":"rgb(101,30,146)",
+  "AwDXLp0Y3UkQkA3e-TkW6w":"rgb(6,181,176)",
+  "PIQtj4QizvEVfgyrMC9VSw":"rgb(43,114,35)",
+  "oCu8jUECggOnSsuaVrMnNg":"rgb(159,98,39)",
+  "03uz_Y8V-2_-_9Y6TK1cSg":"rgb(140,173,149)",
+  "CAvR3zfEC60j7Ot4fWdrzg":"rgb(215,186,211)",
+  "Mxlrlof0ujvOrCbk32J3Bw":"rgb(83,221,222)",
+  "BLs3hd2Rx6z65B_7kHoDHQ":"rgb(215,31,250)",
+  "ioST2XhyIRK2bSpepr24sg":"rgb(42,84,91)",
+  "Ifju9QyjBSBT2bqQwrqwgw":"rgb(114,91,14)",
+  "sLRph0Q25BtVftWwJ5TmNA":"rgb(56,226,169)",
+  "fEq90oZ0zAJQ1IYr6y-fnw":"rgb(80,56,88)",
+  "YrU8PeIXW0cnI-p3-F6CLg":"rgb(66,44,127)",
+  "nl2ugksQSKSgI5jwnWDNgw":"rgb(156,151,14)",
+  "89rA8RNh2raAUDshk9gzhA":"rgb(212,134,112)",
+  "eMGa4yDSGPZxxI320i95cA":"rgb(38,87,104)",
+  "lX_zCZa9-X9mDW4yjp8QxQ":"rgb(82,52,194)",
+  "hIbKbXfP2wFnZ-CJqXm6eA":"rgb(145,44,116)",
+  "TyAG3K--fCEUGTDYqxjTug":"rgb(87,222,119)",
+  "c02D7hUNpDeuE86zqIac0A":"rgb(129,219,254)",
+  "g9r7VQIty1Aptd8TN7FbbQ":"rgb(214,104,115)",
+  "adkV-Rt2NjIZzh2tmryeWQ":"rgb(174,151,123)",
+  "9-QKR5TcSXsUv_se5PF13A":"rgb(245,240,70)",
+  "7Pef9EA21szXXOPJo6Gb5w":"rgb(40,60,239)",
+  "kou0_WfAKybtnMZvMKRbHw":"rgb(192,223,143)",
+  "xXrZmRz32L7lIFBdR7AX4Q":"rgb(5,38,38)",
+  "OSumbrAfUpAhTnBh4DCclg":"rgb(149,152,116)",
+  "ykg3-2C-8Vv3K4mVj1iSfA":"rgb(192,25,206)",
+  "sVYkb6l9Qttbb6mbejBBPQ":"rgb(45,1,154)",
+  "O-IkaK9SsDIWGbWVQpHq6w":"rgb(181,160,76)",
+  "rR7Dm95Iwxc1xc07DZSl1g":"rgb(6,173,147)",
+  "uiNGB7qxbZbLqBVK693mwQ":"rgb(168,223,156)",
+  "uvpsJCZDcBpFFjkDPkHpYQ":"rgb(19,66,235)",
+  "mwx5f-ZtRAG_fWrBiahC3A":"rgb(121,8,121)",
+  "wvK8pQaAyqyjFm2SN05EKw":"rgb(68,20,84)",
+  "3pJiSs1CKU2t3oxwKurYcQ":"rgb(100,189,161)",
+  "Z5ter-6IlN9xSbzvZmLaSA":"rgb(20,240,211)",
+  "SanusF4Ikowb8-yjCCMsJQ":"rgb(111,2,98)",
+  "ToAy9izmF52LHoGEgjzXow":"rgb(228,85,119)",
+  "FdO9DShgmnYeJ9aHVYFhTQ":"rgb(235,120,253)",
+  "ntbKUW9qPoZSWolthyQmyQ":"rgb(47,56,100)",
+  "ZmezrSPC9PVt9a1K-NBrXw":"rgb(52,112,197)",
+  "Q0UguSgi2SvrtEo0sT7e5Q":"rgb(17,208,35)",
+  "v2LgvLYKdBPx5WYfjWm5mg":"rgb(12,234,16)",
+}
+
+    function setup(links, nodes) {
+          
+          var color = d3.scale.category20();
+          
+          var width = 1600,
+              height = 700;
+              radius = 2;
+          
+          var force = d3.layout.force()
+              .nodes(d3.values(nodes))
+              .links(links)
+              .size([width, height])
+              .linkDistance(60)
+              .charge(-300)
+              .on("tick", tick)
+              .start();
+          
+          var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .call(d3.behavior.zoom().on("zoom", function () {
+              svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+            }))
+            .append("g")
+          
+          var link = svg.selectAll(".link")
+              .data(force.links())
+            .enter().append("line")
+              .attr("class", "link");
+          
+          var node = svg.selectAll(".node")
+              .data(force.nodes())
+            .enter().append("g")
+              .attr("class", "node")
+              //.on("click", mouseover)
+              // .on("mouseout", mouseout)
+              .call(force.drag);
+
+              var r = 0
+
+              node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(width - r, d.x)); }) .attr("cy", function(d) { return d.y = Math.max(r, Math.min(height - r, d.y)); });
+
+          node.on('mouseover', function(d) {
+            d3.select(this).select("circle").transition()
+                .duration(750)
+                .attr("r", 16);
+                link.style('stroke-width', function(l) {
+                  if (d === l.source || d === l.target) {
+                    return 4;
+                  }
+                  else
+                    return 2;
+                  });
+
+                link.style('stroke', function(l) {
+                  if (d === l.source || d === l.target) {
+                    return '#DD20D2';
+                  }
+                  else
+                    return '#666';
+                  });
+          });
+
+            node.on('mouseout', function() {
+                  d3.select(this).select("circle").transition()
+                .duration(750)
+                .attr("r", 13);
+              link.style('stroke-width', 2);
+              link.style('stroke', '#666');
+            });
+
+
+          
+          node.append("circle")
+              .attr("r", 13)
+              .style("fill", function(d) { 
+                // var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+                // console.log(colorMap[d.name])
+
+                if (d.name in colorMap) {
+                  return colorMap[d.name];
+                }
+                else {
+                  return color(d.group);
+                }
+
+                //return colorMap[d.name] //color(d.name); 
+              });
+
+          node.append("text")
+              .attr("x", -10)
+              .attr("dy", ".35em")
+              .text(function(d) { 
+                if (d.name in colorMap) {
+                  return d.name.substring(0,3)
+                }
+              });
+          
+          function tick() {
+
+            link
+                .attr("x1", function(d) { return d.source.x; - 30 })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
+          
+            node
+                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+          }
+          
+    }
+
+    var links = []
+
+    function myFunc0() {
+      sessionStorage.setItem("reloading0", "true");
+      document.location.reload();
+    }
+
+    function myFunc1() {
+          sessionStorage.setItem("reloading1", "true");
+          document.location.reload();
+      }
+
+    function myFunc2() {
+          sessionStorage.setItem("reloading2", "true");
+          document.location.reload();
+      }
+
+    function myFunc3() {
+          sessionStorage.setItem("reloading3", "true");
+          document.location.reload();
+      }
+
+    function myFunc4() {
+          sessionStorage.setItem("reloading4", "true");
+          document.location.reload();
+      }
+
+    function myFunc5() {
+          sessionStorage.setItem("reloading5", "true");
+          document.location.reload();
+      }
+
+    function myFunc6() {
+          sessionStorage.setItem("reloading6", "true");
+          document.location.reload();
+      }
+
+    function myFunc7() {
+          sessionStorage.setItem("reloading7", "true");
+          document.location.reload();
+      }
+
+    function myFunc8() {
+          sessionStorage.setItem("reloading8", "true");
+          document.location.reload();
+      }
+
+    function myFunc9() {
+          sessionStorage.setItem("reloading9", "true");
+          document.location.reload();
+      }
+
+    function myFunc10() {
+          sessionStorage.setItem("reloading10", "true");
+          document.location.reload();
+      }
+
+    function myFunc11() {
+          sessionStorage.setItem("reloading11", "true");
+          document.location.reload();
+      }
+
+    function myFunc12() {
+          sessionStorage.setItem("reloading12", "true");
+          document.location.reload();
+      }
+
+    function myFunc13() {
+          sessionStorage.setItem("reloading13", "true");
+          document.location.reload();
+      }
+
+    function myFunc14() {
+          sessionStorage.setItem("reloading14", "true");
+          document.location.reload();
+      }
+
+    function myFunc15() {
+          sessionStorage.setItem("reloading15", "true");
+          document.location.reload();
+      }
+
+    function myFunc16() {
+          sessionStorage.setItem("reloading16", "true");
+          document.location.reload();
+      }
+
+    function myFunc17() {
+          sessionStorage.setItem("reloading17", "true");
+          document.location.reload();
+      }
+
+    function myFunc18() {
+          sessionStorage.setItem("reloading18", "true");
+          document.location.reload();
+      }
+
+    function myFunc19() {
+          sessionStorage.setItem("reloading19", "true");
+          document.location.reload();
+      }
+
+    function myFunc20() {
+          sessionStorage.setItem("reloading20", "true");
+          document.location.reload();
+      }
+
+    function myFunc21() {
+          sessionStorage.setItem("reloading21", "true");
+          document.location.reload();
+      }
+
+    function myFunc22() {
+          sessionStorage.setItem("reloading22", "true");
+          document.location.reload();
+      }
+
+    function myFunc23() {
+          sessionStorage.setItem("reloading23", "true");
+          document.location.reload();
+      }
+
+    function myFunc24() {
+          sessionStorage.setItem("reloading24", "true");
+          document.location.reload();
+      }
+
+    function myFunc25() {
+          sessionStorage.setItem("reloading25", "true");
+          document.location.reload();
+      }
+
+    function myFunc26() {
+          sessionStorage.setItem("reloading26", "true");
+          document.location.reload();
+      }
+
+    function myFunc27() {
+          sessionStorage.setItem("reloading27", "true");
+          document.location.reload();
+      }
+
+    function myFunc28() {
+          sessionStorage.setItem("reloading28", "true");
+          document.location.reload();
+      }
+
+    function myFunc29() {
+          sessionStorage.setItem("reloading29", "true");
+          document.location.reload();
+      }
+
+    function myFunc30() {
+          sessionStorage.setItem("reloading30", "true");
+          document.location.reload();
+      }
+
+
+    window.onload = function() {
+          var reloading0 = sessionStorage.getItem("reloading0");
+          var reloading1 = sessionStorage.getItem('reloading1')
+          var reloading2 = sessionStorage.getItem('reloading2')
+          var reloading3 = sessionStorage.getItem('reloading3')
+          var reloading4 = sessionStorage.getItem('reloading4')
+          var reloading5 = sessionStorage.getItem('reloading5')
+          var reloading6 = sessionStorage.getItem('reloading6')
+          var reloading7 = sessionStorage.getItem('reloading7')
+          var reloading8 = sessionStorage.getItem('reloading8')
+          var reloading9 = sessionStorage.getItem('reloading9')
+          var reloading10 = sessionStorage.getItem('reloading10')
+          var reloading11 = sessionStorage.getItem('reloading11')
+          var reloading12 = sessionStorage.getItem('reloading12')
+          var reloading13 = sessionStorage.getItem('reloading13')
+          var reloading14 = sessionStorage.getItem('reloading14')
+          var reloading15 = sessionStorage.getItem('reloading15')
+          var reloading16 = sessionStorage.getItem('reloading16')
+          var reloading17 = sessionStorage.getItem('reloading17')
+          var reloading18 = sessionStorage.getItem('reloading18')
+          var reloading19 = sessionStorage.getItem('reloading19')
+          var reloading20 = sessionStorage.getItem('reloading20')
+          var reloading21 = sessionStorage.getItem('reloading21')
+          var reloading22 = sessionStorage.getItem('reloading22')
+          var reloading23 = sessionStorage.getItem('reloading23')
+          var reloading24 = sessionStorage.getItem('reloading24')
+          var reloading25 = sessionStorage.getItem('reloading25')
+          var reloading26 = sessionStorage.getItem('reloading26')
+          var reloading27 = sessionStorage.getItem('reloading27')
+          var reloading28 = sessionStorage.getItem('reloading28')
+          var reloading29 = sessionStorage.getItem('reloading29')
+          var reloading30 = sessionStorage.getItem('reloading30')
+
+
+          var nodeToColor = {}
+
+          if (reloading0) {
+              sessionStorage.removeItem("reloading0");
+
+              d3.json("indvCluster0.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    console.log(nodes)
+
+                    setup(links, nodes);
+
+                  });
+          }
+            else if (reloading1) {
+              sessionStorage.removeItem("reloading1");
+
+              d3.json("indvCluster1.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading2) {
+              sessionStorage.removeItem("reloading2");
+
+              d3.json("indvCluster2.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading3) {
+              sessionStorage.removeItem("reloading3");
+
+              d3.json("indvCluster3.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading4) {
+              sessionStorage.removeItem("reloading4");
+
+              d3.json("indvCluster4.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading5) {
+              sessionStorage.removeItem("reloading5");
+
+              d3.json("indvCluster5.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading6) {
+              sessionStorage.removeItem("reloading6");
+
+              d3.json("indvCluster6.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading7) {
+              sessionStorage.removeItem("reloading7");
+
+              d3.json("indvCluster7.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading8) {
+              sessionStorage.removeItem("reloading8");
+
+              d3.json("indvCluster8.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading9) {
+              sessionStorage.removeItem("reloading9");
+
+              d3.json("indvCluster9.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading10) {
+              sessionStorage.removeItem("reloading10");
+
+              d3.json("indvCluster10.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading11) {
+              sessionStorage.removeItem("reloading11");
+
+              d3.json("indvCluster11.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading12) {
+              sessionStorage.removeItem("reloading12");
+
+              d3.json("indvCluster12.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading13) {
+              sessionStorage.removeItem("reloading13");
+
+              d3.json("indvCluster13.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading14) {
+              sessionStorage.removeItem("reloading14");
+
+              d3.json("indvCluster14.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading15) {
+              sessionStorage.removeItem("reloading15");
+
+              d3.json("indvCluster15.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading16) {
+              sessionStorage.removeItem("reloading16");
+
+              d3.json("indvCluster16.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading17) {
+              sessionStorage.removeItem("reloading17");
+
+              d3.json("indvCluster17.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading18) {
+              sessionStorage.removeItem("reloading18");
+
+              d3.json("indvCluster18.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading19) {
+              sessionStorage.removeItem("reloading19");
+
+              d3.json("indvCluster19.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading20) {
+              sessionStorage.removeItem("reloading20");
+
+              d3.json("indvCluster20.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading21) {
+              sessionStorage.removeItem("reloading21");
+
+              d3.json("indvCluster21.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading22) {
+              sessionStorage.removeItem("reloading22");
+
+              d3.json("indvCluster22.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading23) {
+              sessionStorage.removeItem("reloading23");
+
+              d3.json("indvCluster23.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading24) {
+              sessionStorage.removeItem("reloading24");
+
+              d3.json("indvCluster24.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading25) {
+              sessionStorage.removeItem("reloading25");
+
+              d3.json("indvCluster25.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading26) {
+              sessionStorage.removeItem("reloading26");
+
+              d3.json("indvCluster26.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading27) {
+              sessionStorage.removeItem("reloading27");
+
+              d3.json("indvCluster27.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading28) {
+              sessionStorage.removeItem("reloading28");
+
+              d3.json("indvCluster28.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading29) {
+              sessionStorage.removeItem("reloading29");
+
+              d3.json("indvCluster29.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+          else if (reloading30) {
+              sessionStorage.removeItem("reloading30");
+
+              d3.json("indvCluster30.json", function(json) {
+                  var nodes = {};
+                  var links = [];
+
+                    data = json;
+                    for (var i=0; i<data.links.length; ++i) {
+                      link = data.links[i];
+                      links.push(link);
+                      link.source = nodes[link.source] || (nodes[link.source] = {name: link.source});
+                      link.target = nodes[link.target] || (nodes[link.target] = {name: link.target});
+                    }
+
+                    setup(links, nodes);
+
+                  });
+          }
+
+      }
+
+</script>

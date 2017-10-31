@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: 1.5px;
+}
+
+.node circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+</style>
+<body>
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+
+      function setup(links, nodes) {
+            var color = d3.scale.category20();
+    
+                var width = 1600,
+                    height = 700;
+                    radius = 2;
+                
+                var force = d3.layout.force()
+                    .nodes(d3.values(nodes))
+                    .links(links)
+                    .size([width, height])
+                    .linkDistance(function(d){
+                        if(d.source.group == d.target.group)
+                          return 10;//similar state will be close
+                        else 
+                          return 100;//non similar state will be far
+                      })
+                    .linkStrength(2)
+                    .gravity(.1)
+                    .charge(-200)
+                    .on("tick", tick)
+                    .start();
+                
+                var svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", width)
+                  .attr("height", height)
+                  .call(d3.behavior.zoom().on("zoom", function () {
+                    svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+                  }))
+                  .append("g")
+                
+                var link = svg.selectAll(".link")
+                    .data(force.links())
+                  .enter().append("line")
+                    .attr("class", "link");
+                
+                var node = svg.selectAll(".node")
+                    .data(force.nodes())
+                  .enter().append("g")
+                    .attr("class", "node")
+                    //.on("click", mouseover)
+                    // .on("mouseout", mouseout)
+                    .call(force.drag);
+
+                    var r = 0
+
+                    node.attr("cx", function(d) { return d.x = Math.max(r, Math.min(width - r, d.x)); }) .attr("cy", function(d) { return d.y = Math.max(r, Math.min(height - r, d.y)); });
+
+                node.on('mouseover', function(d) {
+                  d3.select(this).select("circle").transition()
+                      .duration(750)
+                      .attr("r", 16);
+                      link.style('stroke-width', function(l) {
+                        if (d === l.source || d === l.target) {
+                          return 4;
+                        }
+                        else
+                          return 2;
+                        });
+
+                      link.style('stroke', function(l) {
+                        if (d === l.source || d === l.target) {
+                          return '#DD20D2';
+                        }
+                        else
+                          return '#666';
+                        });
+                });
+
+                  node.on('mouseout', function() {
+                        d3.select(this).select("circle").transition()
+                      .duration(750)
+                      .attr("r", 8);
+                    link.style('stroke-width', 2);
+                    link.style('stroke', '#666');
+                  });
+                
+                node.append("circle")
+                    .attr("r", 8)
+                .style("fill", function(d) { console.log('d: ', d); return color(d.group); });
+                
+                function tick() {
+
+                  link
+                      .attr("x1", function(d) { return d.source.x; - 30 })
+                      .attr("y1", function(d) { return d.source.y; })
+                      .attr("x2", function(d) { return d.target.x; })
+                      .attr("y2", function(d) { return d.target.y; });
+                
+                  node
+                      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+                }
+                
+                function mouseover() {
+                  d3.select(this).select("circle").transition()
+                      .duration(750)
+                      .attr("r", 16);
+                }
+                
+                function mouseout() {
+                  d3.select(this).select("circle").transition()
+                      .duration(750)
+                      .attr("r", 8);
+                }
+      }
+
+
+      d3.json("data.json", function(json) {
+            var nodes = {};
+            var links = [];
+
+              data = json;
+              for (var i=0; i<data.links.length; ++i) {
+                link = data.links[i];
+                links.push(link);
+                link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, group: link.group});
+                link.target = nodes[link.target] || (nodes[link.target] = {name: link.target, group: link.group});
+              }
+
+              setup(links, nodes);
+
+      });
+
+</script>
