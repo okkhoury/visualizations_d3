@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.link {
+  fill: none;
+  stroke: #666;
+  stroke-width: .5px;
+}
+
+.node circle {
+  stroke: #fff;
+  stroke-width: 3px;
+  r: 30;
+}
+
+text {
+  font: 10px sans-serif;
+  pointer-events: none;
+}
+
+</style>
+
+<body>
+<p id="info">
+      
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+
+   var info = d3.select("#info").text("Topical words:");
+
+   function readTextFile(file)
+    {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, false);
+        rawFile.onreadystatechange = function ()
+        {
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status == 0)
+                {
+                    var allText = rawFile.responseText;
+                    alert(allText);
+                }
+            }
+        }
+        rawFile.send(null);
+    }
+
+    var wordMap = {
+      "0":"ood, great, good, servic, love, time, NUM, friend, best, staff",
+      "1":"UM, time, servic, call, car, work, great, day, year, custom",
+      "2":"ood, NUM, order, salad, food, chicken, love, time, great, sandwich",
+      "3":"UM, order, food, time, wait, servic, minut, tabl, NUM-minut, good",
+      "4":"ood, NUM, good, order, chicken, taco, time, rice, mexican, great",
+      "5":"UM, time, great, park, good, peopl, love, lot, nice, year",
+      "6":"tore, NUM, help, time, shop, price, great, find, good, love",
+      "7":"izza, NUM, good, order, burger, time, food, chees, fri, great",
+      "8":"offe, NUM, good, ice, cream, love, time, chocol, great, flavor",
+      "9":"UM, sushi, roll, happi, hour, good, happi-hour, great, order, food",
+      "10":"bar, NUM, drink, good, beer, time, great, night, friend, food",
+      "11":"breakfast, NUM, good, egg, food, order, time, wait, great, servic",
+      "12":"NUM, good, food, order, restaur, great, time, servic, steak, perfect",
+      "13":"NUM, food, good, chicken, order, dish, time, sauc, restaur, tast",
+      "14":"room, NUM, hotel, stay, pool, nice, great, time, night, servic",
+      "15":"NUM, food, good, order, time, eat, restaur, thing, tabl, lunch",
+      "16":"NUM, store, food, good, select, great, fresh, love, price, shop",
+      "17":"NUM, good, food, time, order, tabl, restaur, pizza, salad, great",
+      "18":"NUM, cake, time, parti, room, order, food, tabl, good, kid",
+      "19":"NUM, food, time, order, good, love, restaur, great, menu, salad"
+    }
+
+    d3.json("affinity.json", function(json) {
+            var nodes = {};
+            var links = [];
+
+              data = json;
+              for (var i=0; i<data.links.length; ++i) {
+                link = data.links[i];
+                links.push(link);
+                link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, affinity: link.affinity});
+                link.target = nodes[link.target] || (nodes[link.target] = {name: link.target, affinity: link.affinity});
+              }
+
+              setup(links, nodes);
+
+      });
+
+
+    function setup(links, nodes) {
+            var colorIntensityScale = [
+              "#E5E5E5",
+              "#CCCCCC",
+              "#B2B2B2",
+              "#999999",
+              "#808080",
+              "#666666",
+              "#4D4D4D",
+              "#333333",
+              "#22222A",
+              "#000000"
+            ];
+          
+          var color = d3.scale.category20();
+          
+          var width = 1600,
+              height = 700;
+              radius = 2;
+          
+          var force = d3.layout.force()
+              .nodes(d3.values(nodes))
+              .links(links)
+              .size([width, height])
+              .linkDistance(500)
+              .charge(-30)
+              .on("tick", tick)
+              .start();
+          
+          var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .call(d3.behavior.zoom().on("zoom", function () {
+              svg.attr("transform", "translate(" + d3.event.translate + ")" + " scale(" + d3.event.scale + ")")
+            }))
+            .append("g")
+          
+          var link = svg.selectAll(".link")
+              .data(force.links())
+            .enter().append("line")
+              .attr("class", "link");
+          
+          var node = svg.selectAll(".node")
+              .data(force.nodes())
+              .enter().append("g")
+              .attr("class", "node")
+              .call(force.drag);
+
+          node.on('mouseover', function(d) {
+            var info = d3.select("#info").text("Topical words: " + wordMap[d.name]);
+                link.style('stroke-width', function(l) {
+                  if (d === l.source || d === l.target) {
+                    return 5;
+                  }
+                  else
+                    return .5;
+                  });
+
+                link.style('stroke', function(l) {
+                  if (d === l.source || d === l.target) {
+                    return colorIntensityScale[Math.floor(l.affinity / .1)]
+                  }
+                  else
+                    return '#666';
+                  });
+          });
+
+            node.on('mouseout', function() {
+              var info = d3.select("#info").text("Topical words: ");
+              link.style('stroke-width', .5);
+              link.style('stroke', '#666');
+            });
+          
+          node.append("circle")
+              .attr("r", 30)
+              .style("fill", function(d) { console.log('d: ', d); return color(d.name); });
+
+          // node.append("text")
+          //     .attr("x", -20)
+          //     .attr("dy", ".35em")
+          //     .text(function(d) { return d.name});
+
+          function tick() {
+            node
+                  .attr("cx", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
+                  .attr("cy", function(d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
+
+            link
+                .attr("x1", function(d) { return d.source.x; - 30 })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
+          
+            node
+                .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+          }
+    }
+
+</script>

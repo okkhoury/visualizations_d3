@@ -1,0 +1,22 @@
+var wordMap = {
+	"0":"food, great, good, servic, love, time, NUM, friend, best, staff",
+	"1":"NUM, time, servic, call, car, work, great, day, year, custom",
+	"2":"good, NUM, order, salad, food, chicken, love, time, great, sandwich",
+	"3":"NUM, order, food, time, wait, servic, minut, tabl, NUM-minut, good",
+	"4":"food, NUM, good, order, chicken, taco, time, rice, mexican, great",
+	"5":"NUM, time, great, park, good, peopl, love, lot, nice, year",
+	"6":"store, NUM, help, time, shop, price, great, find, good, love",
+	"7":"pizza, NUM, good, order, burger, time, food, chees, fri, great",
+	"8":"coffe, NUM, good, ice, cream, love, time, chocol, great, flavor",
+	"9":"NUM, sushi, roll, happi, hour, good, happi-hour, great, order, food",
+	"10":"bar, NUM, drink, good, beer, time, great, night, friend, food",
+	"11":"breakfast, NUM, good, egg, food, order, time, wait, great, servic",
+	"12":"NUM, good, food, order, restaur, great, time, servic, steak, perfect",
+	"13":"NUM, food, good, chicken, order, dish, time, sauc, restaur, tast",
+	"14":"room, NUM, hotel, stay, pool, nice, great, time, night, servic",
+	"15":"NUM, food, good, order, time, eat, restaur, thing, tabl, lunch",
+	"16":"NUM, store, food, good, select, great, fresh, love, price, shop",
+	"17":"NUM, good, food, time, order, tabl, restaur, pizza, salad, great",
+	"18":"NUM, cake, time, parti, room, order, food, tabl, good, kid",
+	"19":"NUM, food, time, order, good, love, restaur, great, menu, salad"
+}
