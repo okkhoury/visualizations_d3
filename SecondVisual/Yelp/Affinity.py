@@ -1,5 +1,8 @@
 import numpy as np 
 
+# Determines how many edges get removed.
+EDGE_THRESHOLD = 0.1
+
 matrix = np.loadtxt("output_B_MLE.txt")
 
 rows = matrix.shape[0]
@@ -15,7 +18,7 @@ numLines = 0
 for row in range(0, rows):
 	for col in range(curCol, cols):
 
-		if matrix[row][col] > .1:
+		if matrix[row][col] > EDGE_THRESHOLD:
 			numLines += 2
 
 	curCol += 1
@@ -26,7 +29,7 @@ count = 0
 for row in range(0, rows):
 	for col in range(curCol, cols):
 
-		if matrix[row][col] > .1:
+		if matrix[row][col] > EDGE_THRESHOLD:
 			count += 2
 			if count == numLines:
 				jsonFile.write('{"source":' + '"' + str(row) + '","target":' + '"' + str(col) + '","affinity":' + str(matrix[row][col]) + '},\n')
