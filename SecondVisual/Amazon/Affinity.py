@@ -15,7 +15,7 @@ numLines = 0
 for row in range(0, rows):
 	for col in range(curCol, cols):
 
-		if matrix[row][col] > .5:
+		if matrix[row][col] > .1:
 			numLines += 2
 
 	curCol += 1
@@ -26,7 +26,7 @@ count = 0
 for row in range(0, rows):
 	for col in range(curCol, cols):
 
-		if matrix[row][col] > .5:
+		if matrix[row][col] > .1:
 			count += 2
 			if count == numLines:
 				jsonFile.write('{"source":' + '"' + str(row) + '","target":' + '"' + str(col) + '","affinity":' + str(matrix[row][col]) + '},\n')

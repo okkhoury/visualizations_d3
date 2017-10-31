@@ -15,7 +15,7 @@ numLines = 0
 for row in range(0, rows):
 	for col in range(curCol, cols):
 
-		if matrix[row][col] != 0:
+		if matrix[row][col] > .1:
 			numLines += 2
 
 	curCol += 1
