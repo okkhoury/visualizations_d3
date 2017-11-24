@@ -41,5 +41,7 @@ with open("TopicWords.txt", "r") as file:
 		lineCount += 1
 
 wordMapFile.write('}')
+wordMapFile.close();
 
-		
+with open("WordMap.txt", 'r') as fin:
+    print fin.read()

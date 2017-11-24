@@ -18,7 +18,7 @@ var wordMap = {
 	"16":"NUM, good, food, bbq, buffet, chicken, time, meat, sauc, rib",
 	"17":"NUM, cream, cake, ice, chocol, ice-cream, good, flavor, cooki, love",
 	"18":"NUM, hair, nail, time, salon, cut, great, massag, color, good",
-	"19":"NUM, wine, food, restaur, great, servic, time, good, order, menu",
+	"19":"NUM, wine, food, restaur, great, servic, time, good, order, menu"
 	"20":"NUM, class, time, kid, great, gym, love, year, work, day",
 	"21":"breakfast, NUM, good, egg, food, order, time, wait, pancak, bacon",
 	"22":"NUM, good, star, food, NUM-star, servic, great, price, time, order",

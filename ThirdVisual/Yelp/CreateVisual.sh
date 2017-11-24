@@ -5,7 +5,7 @@ echo ""
 echo ""
 echo "THIRD VISUALIZATION CREATION"
 echo ""
-Python convertDataToTXT.py
+Python convertDataToJSON.py
 echo ""
 echo "###################################################################################"
 echo ""

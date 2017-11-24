@@ -2,7 +2,7 @@ echo ""
 echo ""
 echo "###################################################################################"
 echo ""
-echo "SECOND VISUALIZATION CREATION"
+echo "SECOND VISUALIZATION CREATION FOR YELP"
 echo ""
 echo "To update the topic words for model, copy the following map into affinityPlot.html: "
 echo ""
@@ -14,7 +14,7 @@ echo ""
 echo ""
 read -n1 -p "Open affinityPlot.html? [y,n]" doit 
 case $doit in  
-  y|Y) vi affinityPlot.html;; 
+  y|Y) vi YelpAffinityPlot.html;;
   n|N) echo ;; 
   *) echo ;; 
 esac
