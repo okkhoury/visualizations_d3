@@ -28,7 +28,7 @@ for row in range(0, rows):
 
 		if matrix[row][col] != 0:
 			count += 2
-			print(numLines, count)
+
 			if count == numLines:
 				jsonFile.write('{"source":' + '"' + str(row) + '","target":' + '"' + str(col) + '","affinity":' + str(matrix[row][col]) + '},\n')
 				jsonFile.write('{"source":' + '"' + str(col) + '","target":' + '"' + str(row) + '","affinity":' + str(matrix[row][col]) + '}\n')

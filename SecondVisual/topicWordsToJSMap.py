@@ -29,5 +29,12 @@ with open("TopicWords.txt", "r") as file:
 		wordMapFile.write('\t"' + group + '":' + '"' + wordStr + '",\n')
 
 wordMapFile.write('}')
+wordMapFile.close()
+
+
+#Print out the contents of the newly created map
+
+with open("WordMap.txt", 'r') as fin:
+    print fin.read()
 
 		
