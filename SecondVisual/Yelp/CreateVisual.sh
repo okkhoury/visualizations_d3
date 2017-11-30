@@ -23,7 +23,7 @@ echo ""
 Python Affinity.py
 read -n1 -p "Open the visual? [y,n]" doit 
 case $doit in  
-  y|Y) open affinityPlot.html -a firefox;; 
+  y|Y) open YelpAffinityPlot.html -a firefox;; 
   n|N) echo ;; 
   *) echo ;; 
 esac
