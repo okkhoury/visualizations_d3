@@ -161,7 +161,7 @@ text {
           node.on('mouseover', function(d) {
             d3.select(this).select("circle").transition()
                 .duration(750)
-                .attr("r", 50);
+                .attr("r", 80);
             var info = d3.select("#info").text("Topical words: " + wordMap[d.name]);
                 link.style('stroke-width', function(l) {
                   if (d === l.source || d === l.target) {
@@ -183,14 +183,14 @@ text {
             node.on('mouseout', function() {
               d3.select(this).select("circle").transition()
                 .duration(750)
-                .attr("r", 20);
+                .attr("r", 40);
               var info = d3.select("#info").text("Topical words: ");
               link.style('stroke-width', .5);
               link.style('stroke', '#666');
             });
           
           node.append("circle")
-              .attr("r", 25)
+              .attr("r", 40)
               .style("fill", function(d) { 
                 //var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
                 //return hue;
