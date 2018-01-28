@@ -134,7 +134,7 @@ text {
               .links(links)
               .size([width, height])
               .linkDistance(500)
-              .charge(-30)
+              .charge(-6000)
               .on("tick", tick)
               .start();
           
@@ -159,12 +159,9 @@ text {
               .call(force.drag);
 
           node.on('mouseover', function(d) {
-            d3.select(this).select("circle").transition()
-                .duration(750)
-                .attr("r", 80);
             var info = d3.select("#info").text("Topical words: " + wordMap[d.name]);
                 link.style('stroke-width', function(l) {
-                  if (d === l.source || d === l.target) {
+                  if (d === l.source) {
                     return 5;
                   }
                   else
@@ -172,7 +169,7 @@ text {
                   });
 
                 link.style('stroke', function(l) {
-                  if (d === l.source || d === l.target) {
+                  if (d === l.source) {
                     return colorIntensityScale[Math.floor(l.affinity / .1)]
                   }
                   else
@@ -181,16 +178,13 @@ text {
           });
 
             node.on('mouseout', function() {
-              d3.select(this).select("circle").transition()
-                .duration(750)
-                .attr("r", 40);
               var info = d3.select("#info").text("Topical words: ");
               link.style('stroke-width', .5);
               link.style('stroke', '#666');
             });
           
           node.append("circle")
-              .attr("r", 40)
+              .attr("r", 50)
               .style("fill", function(d) { 
                 //var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
                 //return hue;
