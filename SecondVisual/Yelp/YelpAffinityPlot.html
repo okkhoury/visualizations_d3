@@ -159,6 +159,9 @@ text {
               .call(force.drag);
 
           node.on('mouseover', function(d) {
+            d3.select(this).select("circle").transition()
+                .duration(750)
+                .attr("r", 50);
             var info = d3.select("#info").text("Topical words: " + wordMap[d.name]);
                 link.style('stroke-width', function(l) {
                   if (d === l.source || d === l.target) {
@@ -178,6 +181,9 @@ text {
           });
 
             node.on('mouseout', function() {
+              d3.select(this).select("circle").transition()
+                .duration(750)
+                .attr("r", 20);
               var info = d3.select("#info").text("Topical words: ");
               link.style('stroke-width', .5);
               link.style('stroke', '#666');
