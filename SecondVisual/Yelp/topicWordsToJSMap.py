@@ -24,19 +24,16 @@ with open("TopicWords.txt", "r") as file:
 
 		wordStr = ""
 		count = 1
-		for word in re.split(r'\t+', words)[0:10]:
+		for word in re.split(r'\t+', words)[0:30]:
 
-			if count == 10:
+			if count == 30:
 				wordStr += word
 			else:
 				wordStr += word + ', '
 
 			count += 1
 
-		if lineCount == 20:
-			wordMapFile.write('\t"' + group + '":' + '"' + wordStr + '"\n')
-		else:
-			wordMapFile.write('\t"' + group + '":' + '"' + wordStr + '",\n')
+		wordMapFile.write('\t"' + group + '":' + '"' + wordStr + '",\n')
 
 		lineCount += 1
 

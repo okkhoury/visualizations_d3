@@ -17,8 +17,10 @@ case $doit in
   *) echo ;; 
 esac
 echo ""
+read -p "Select a cluster (Ex. 13): " cluster
+echo ""
 read -p "Choose int value for top K: " topK
-Python Affinity.py $topK
+Python Affinity.py $topK $cluster
 echo ""
 read -n1 -p "Open the visual? [y,n] " doit 
 case $doit in  
