@@ -1,37 +1,28 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
-
 .link {
   fill: none;
   stroke: #666;
   stroke-width: .5px;
 }
-
 .node circle {
   stroke: #fff;
   stroke-width: 3px;
   r: 30;
 }
-
 text {
   font: 12px sans-serif;
   pointer-events: none;
 }
-
 </style>
 
 <body>
-<p id="affinities">
 <p id="info">
       
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
-
    var info = d3.select("#info").text("Topical words:");
-
-   var affinities = d3.select("#affinities").text("Affinities: ")
-
    function readTextFile(file)
     {
         var rawFile = new XMLHttpRequest();
@@ -49,91 +40,74 @@ text {
         }
         rawFile.send(null);
     }
-
-
-// ############################# COPY THE NEWLY GENERATED WORD MAP HERE  ##########################################################
-
     var wordMap = {
-  "0":"great, food, good, servic, love, time, friend, NUM, staff, price, best, nice, amaz, restaur, atmospher, bar, beer, drink, awesom, lunch, favorit, delici, recommend, menu, definit, eat, order, locat, wait, happi",
-  "1":"NUM, great, time, servic, friend, help, staff, work, love, year, recommend, dr, good, price, care, custom, store, experi, best, nice, clean, shop, feel, high, day, amaz, find, offic, job, locat",
-  "2":"food, good, NUM, taco, mexican, salsa, order, burrito, great, time, bean, chip, love, chicken, restaur, servic, mexican-food, best, chees, eat, sauc, rice, tast, friend, tortilla, delici, flavor, enchilada, fresh, green",
-  "3":"NUM, car, time, servic, call, work, custom, told, day, wait, guy, tire, help, minut, hour, price, busi, phone, store, good, great, wash, custom-servic, manag, year, compani, chang, check, NUM-minut, peopl",
-  "4":"good, order, NUM, food, great, love, time, salad, servic, delici, chicken, friend, perfect, chees, restaur, amaz, fri, meal, dinner, nice, menu, potato, sauc, steak, night, bread, best, side, definit, dessert",
-  "5":"NUM, time, great, park, good, love, lot, peopl, nice, seat, play, game, area, food, year, friend, movi, kid, day, fun, pretti, walk, cours, ticket, enjoy, phoenix, night, price, thing, drink",
-  "6":"NUM, food, order, time, servic, wait, minut, tabl, NUM-minut, drink, good, server, manag, restaur, seat, friend, waitress, told, peopl, great, experi, walk, bar, eat, custom, check, busi, hour, bad, night",
-  "7":"pizza, NUM, good, order, time, great, chees, crust, food, sauc, love, wing, salad, best, slice, servic, tast, wait, top, eat, friend, sandwich, delici, fresh, italian, bread, thin, lunch, pretti, better",
-  "8":"coffe, good, great, NUM, love, friend, time, food, drink, servic, tea, locat, sandwich, breakfast, nice, shop, order, ice, staff, work, best, starbuck, peopl, delici, day, fresh, pretti, thing, busi, favorit",
-  "9":"sushi, roll, NUM, good, order, time, food, great, happi, hour, happi-hour, fish, fresh, price, servic, eat, restaur, friend, love, tuna, bar, spici, tast, menu, best, salmon, chef, special, pretti, nice",
-  "10":"store, NUM, price, shop, great, find, good, time, item, select, love, help, locat, buy, thing, lot, friend, staff, stuff, nice, servic, custom, peopl, sale, cloth, book, walk, food, clean, pretti",
-  "11":"food, good, restaur, NUM, time, great, servic, menu, order, locat, eat, friend, best, tabl, nice, love, price, dish, lunch, thing, feel, peopl, year, review, find, meal, dine, lot, wait, experi",
-  "12":"NUM, order, food, time, sandwich, good, servic, locat, wait, work, custom, eat, peopl, chicken, counter, walk, minut, drink, employe, guy, drive, friend, thing, fri, lunch, day, tast, bad, manag, fast",
-  "13":"bar, NUM, drink, good, time, night, great, beer, friend, food, peopl, love, music, bartend, tabl, crowd, pretti, nice, fun, play, servic, live, game, danc, cool, dive, best, lot, order, thing",
-  "14":"food, NUM, good, chicken, order, thai, rice, dish, time, sauc, restaur, chines, soup, fri, great, noodl, servic, pho, love, roll, flavor, spici, lunch, tast, best, eat, beef, friend, hot, egg",
-  "15":"sandwich, salad, NUM, good, food, order, lunch, chicken, time, love, bread, great, fresh, pita, eat, delici, chees, gyro, meat, soup, menu, friend, side, hummus, best, tast, fri, servic, flavor, thing",
-  "16":"NUM, good, food, bbq, buffet, chicken, time, meat, sauc, rib, pork, order, great, side, eat, tast, sandwich, fri, best, price, servic, lunch, pretti, love, flavor, thing, chees, better, restaur, pull",
-  "17":"NUM, cream, cake, ice, chocol, ice-cream, good, flavor, cooki, love, time, sweet, tast, order, delici, great, best, top, day, friend, eat, favorit, butter, thing, dessert, fresh, better, sugar, bakeri, shop",
-  "18":"NUM, hair, nail, time, salon, cut, great, massag, color, good, friend, work, love, servic, nice, job, appoint, wait, price, year, day, minut, experi, feel, best, clean, walk, told, week, recommend",
-  "19":"NUM, wine, food, restaur, great, servic, time, good, order, menu, dinner, experi, meal, tabl, perfect, steak, night, cours, best, server, love, friend, dine, nice, tast, dessert, enjoy, special, dish, amaz",
-  "20":"NUM, class, time, kid, great, gym, love, year, work, day, peopl, friend, good, fit, room, staff, thing, month, week, help, nice, locat, lot, feel, school, hour, person, fun, machin, start",
-  "21":"breakfast, NUM, good, egg, food, order, time, wait, pancak, bacon, servic, great, toast, love, friend, coffe, menu, potato, tabl, delici, eat, morn, french, chees, thing, nice, side, meal, fresh, best",
-  "22":"NUM, good, star, food, NUM-star, servic, great, price, time, order, pretti, restaur, friend, salad, review, eat, menu, drink, better, peopl, nice, best, experi, meal, chicken, dish, wife, reason, thing, dinner",
-  "23":"NUM, time, peopl, good, store, thing, shoe, guy, work, girl, walk, find, friend, day, love, lot, shop, pretti, year, buy, wait, help, drink, star, feel, nice, start, price, bowl, better",
-  "24":"NUM, good, dish, tast, flavor, food, salad, sauc, chees, order, fresh, menu, bread, time, great, chicken, fri, meal, serv, sweet, restaur, perfect, top, nice, dessert, delici, fish, plate, tomato, green",
-  "25":"NUM, food, order, good, chicken, tast, time, fri, eat, fish, salad, meal, sauc, steak, restaur, cook, bad, shrimp, servic, review, waitress, dish, better, thing, tabl, menu, plate, star, flavor, serv",
-  "26":"NUM, order, good, food, salad, tabl, time, server, wait, minut, restaur, chicken, bread, sauc, servic, meal, drink, dinner, NUM-minut, nice, pizza, dish, seat, arriv, night, great, menu, plate, tast, eat",
-  "27":"NUM, dog, time, offic, call, dr, day, doctor, care, wait, appoint, staff, told, work, year, park, visit, good, peopl, room, move, month, great, thing, week, pet, hour, nice, review, clean",
-  "28":"NUM, order, call, time, custom, pizza, manag, servic, told, minut, food, wait, card, NUM-minut, deliveri, busi, custom-servic, phone, store, day, locat, good, hour, pay, pick, work, employe, charg, credit, peopl",
-  "29":"NUM, happi, hour, happi-hour, good, great, drink, food, time, bar, order, love, beer, menu, friend, servic, price, special, night, wine, appet, nice, pretti, fri, chees, best, dinner, favorit, wing, burger",
-  "30":"burger, fri, good, NUM, order, food, chees, time, dog, great, onion, hot, love, friend, tast, best, eat, servic, sandwich, bun, pretti, thing, cook, sauc, grill, ring, top, sweet, better, menu",
-  "31":"room, NUM, hotel, stay, pool, nice, night, time, great, bed, servic, check, good, area, vega, day, staff, friend, clean, strip, love, free, desk, front, walk, call, thing, bathroom, peopl, locat",
-  "32":"NUM, food, time, order, restaur, good, eat, servic, friend, love, review, experi, tabl, thing, manag, server, kid, great, drink, year, day, night, meal, told, peopl, walk, custom, salad, menu, bad",
-  "33":"NUM, order, good, food, time, tabl, bar, friend, nice, beer, seat, wait, drink, great, park, menu, lot, fri, love, pretti, night, salad, side, chees, servic, restaur, area, server, sandwich, eat",
-  "34":"NUM, food, good, order, chip, salsa, tabl, sauc, restaur, time, mexican, chees, menu, taco, tast, flavor, great, bean, dish, server, serv, plate, tortilla, drink, meal, love, nice, enchilada, fish, margarita",
-  "35":"NUM, good, pie, food, time, year, beer, thing, great, order, wing, bar, eat, hot, drink, pretti, friend, love, peopl, servic, salad, nice, lunch, visit, menu, chicken, day, fri, kid, pizza",
-  "36":"NUM, food, store, good, fresh, meat, great, love, select, produc, market, price, groceri, shop, buy, find, item, time, thing, product, chees, lot, wine, best, local, organ, bread, qualiti, nice, fruit",
-  "37":"NUM, good, order, sauc, dessert, restaur, tast, perfect, dish, bread, delici, love, food, time, chocol, cream, menu, salad, dinner, tabl, serv, meal, great, chees, flavor, top, potato, cours, servic, enjoy",
-  "38":"chicken, NUM, food, fri, order, good, waffl, time, eat, rice, chees, red, bean, side, wait, thing, sweet, friend, meal, work, menu, tast, best, sauc, great, love, restaur, lunch, flavor, day",
-  "39":"NUM, food, good, menu, order, restaur, tast, time, flavor, fresh, chees, great, perfect, sauc, serv, eat, love, grill, dish, steak, beer, enjoy, fri, night, bread, cook, thing, meat, locat, chef",
-  "40":"NUM, good, order, food, time, dinner, wife, pretti, thing, price, tabl, salad, menu, restaur, servic, eat, bar, night, great, friend, cake, lunch, room, day, year, peopl, big, best, shrimp, dine",
-  "41":"NUM, good, order, time, food, restaur, garlic, peopl, great, review, fri, burger, high, offer, experi, day, feel, flavor, expect, server, dish, menu, perfect, chees, nice, tabl, serv, year, phoenix, visit",
-}
-
-// ###############################################################################################################################
-
-    var affinityString = "Affinities: "
-
+      "0":"great, food, good, servic, love, time, friend, NUM, staff, price",
+      "1":"NUM, great, time, servic, friend, help, staff, work, love, year",
+      "2":"food, good, NUM, taco, mexican, salsa, order, burrito, great, time",
+      "3":"NUM, car, time, servic, call, work, custom, told, day, wait",
+      "4":"good, order, NUM, food, great, love, time, salad, servic, delici",
+      "5":"NUM, time, great, park, good, love, lot, peopl, nice, seat",
+      "6":"NUM, food, order, time, servic, wait, minut, tabl, NUM-minut, drink",
+      "7":"pizza, NUM, good, order, time, great, chees, crust, food, sauc",
+      "8":"coffe, good, great, NUM, love, friend, time, food, drink, servic",
+      "9":"sushi, roll, NUM, good, order, time, food, great, happi, hour",
+      "10":"store, NUM, price, shop, great, find, good, time, item, select",
+      "11":"food, good, restaur, NUM, time, great, servic, menu, order, locat",
+      "12":"NUM, order, food, time, sandwich, good, servic, locat, wait, work",
+      "13":"bar, NUM, drink, good, time, night, great, beer, friend, food",
+      "14":"food, NUM, good, chicken, order, thai, rice, dish, time, sauc",
+      "15":"sandwich, salad, NUM, good, food, order, lunch, chicken, time, love",
+      "16":"NUM, good, food, bbq, buffet, chicken, time, meat, sauc, rib",
+      "17":"NUM, cream, cake, ice, chocol, ice-cream, good, flavor, cooki, love",
+      "18":"NUM, hair, nail, time, salon, cut, great, massag, color, good",
+      "19":"NUM, wine, food, restaur, great, servic, time, good, order, menu",
+      "20":"NUM, class, time, kid, great, gym, love, year, work, day",
+      "21":"breakfast, NUM, good, egg, food, order, time, wait, pancak, bacon",
+      "22":"NUM, good, star, food, NUM-star, servic, great, price, time, order",
+      "23":"NUM, time, peopl, good, store, thing, shoe, guy, work, girl",
+      "24":"NUM, good, dish, tast, flavor, food, salad, sauc, chees, order",
+      "25":"NUM, food, order, good, chicken, tast, time, fri, eat, fish",
+      "26":"NUM, order, good, food, salad, tabl, time, server, wait, minut",
+      "27":"NUM, dog, time, offic, call, dr, day, doctor, care, wait",
+      "28":"NUM, order, call, time, custom, pizza, manag, servic, told, minut",
+      "29":"NUM, happi, hour, happi-hour, good, great, drink, food, time, bar",
+      "30":"burger, fri, good, NUM, order, food, chees, time, dog, great",
+      "31":"room, NUM, hotel, stay, pool, nice, night, time, great, bed",
+      "32":"NUM, food, time, order, restaur, good, eat, servic, friend, love",
+      "33":"NUM, order, good, food, time, tabl, bar, friend, nice, beer",
+      "34":"NUM, food, good, order, chip, salsa, tabl, sauc, restaur, time",
+      "35":"NUM, good, pie, food, time, year, beer, thing, great, order",
+      "36":"NUM, food, store, good, fresh, meat, great, love, select, produc",
+      "37":"NUM, good, order, sauc, dessert, restaur, tast, perfect, dish, bread",
+      "38":"chicken, NUM, food, fri, order, good, waffl, time, eat, rice",
+      "39":"NUM, food, good, menu, order, restaur, tast, time, flavor, fresh",
+      "40":"NUM, good, order, food, time, dinner, wife, pretti, thing, price",
+      "41":"NUM, good, order, time, food, restaur, garlic, peopl, great, review",
+    }
     d3.json("YelpAffinity.json", function(json) {
             var nodes = {};
             var links = [];
-
               data = json;
               for (var i=0; i<data.links.length; ++i) {
                 link = data.links[i];
                 links.push(link);
                 link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, affinity: link.affinity});
                 link.target = nodes[link.target] || (nodes[link.target] = {name: link.target, affinity: link.affinity});
-
-                affinityString += "c" + link.target.name + "= " + link.affinity + ", "
-
               }
-
-              var affinities = d3.select("#affinities").text(affinityString)
               setup(links, nodes);
       });
-
     function setup(links, nodes) {
             var colorIntensityScale = [
-              "#0000ff",
-              "#3232ff",
-              "#6666ff",
-              "#9999ff",
-              "#ccccff",
-              "#ffb2b2",
-              "#ff7f7f",
-              "#ff4c4c",
-              "#ff0000",
-              "#b20000",
-              "#7c0000"
+              "#E5E5E5",
+              "#CCCCCC",
+              "#B2B2B2",
+              "#999999",
+              "#808080",
+              "#666666",
+              "#4D4D4D",
+              "#333333",
+              "#22222A",
+              "#000000"
             ];
           
           var color = d3.scale.category20();
@@ -147,7 +121,7 @@ text {
               .links(links)
               .size([width, height])
               .linkDistance(500)
-              .charge(-8000)
+              .charge(-30)
               .on("tick", tick)
               .start();
           
@@ -170,26 +144,23 @@ text {
               .enter().append("g")
               .attr("class", "node")
               .call(force.drag);
-
           node.on('mouseover', function(d) {
             var info = d3.select("#info").text("Topical words: " + wordMap[d.name]);
                 link.style('stroke-width', function(l) {
-                  if (d === l.source) {
+                  if (d === l.source || d === l.target) {
                     return 5;
                   }
                   else
                     return .5;
                   });
-
                 link.style('stroke', function(l) {
-                  if (d === l.source) {
+                  if (d === l.source || d === l.target) {
                     return colorIntensityScale[Math.floor(l.affinity / .1)]
                   }
                   else
                     return '#666';
                   });
           });
-
             node.on('mouseout', function() {
               var info = d3.select("#info").text("Topical words: ");
               link.style('stroke-width', .5);
@@ -197,21 +168,20 @@ text {
             });
           
           node.append("circle")
-              .attr("r", 100)
+              .attr("r", 25)
               .style("fill", function(d) { 
+                //var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
+                //return hue;
                 return color(d.name); 
               });
-
           node.append("text")
               .attr("x", -13)
               .attr("dy", ".35em")
               .text(function(d) { return "C_" + d.name});
-
           function tick() {
             node
                   .attr("cx", function(d) { return d.x = Math.max(radius, Math.min(width - radius, d.x)); })
                   .attr("cy", function(d) { return d.y = Math.max(radius, Math.min(height - radius, d.y)); });
-
             link
                 .attr("x1", function(d) { return d.source.x; - 30 })
                 .attr("y1", function(d) { return d.source.y; })
@@ -222,5 +192,4 @@ text {
                 .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
           }
     }
-
 </script>

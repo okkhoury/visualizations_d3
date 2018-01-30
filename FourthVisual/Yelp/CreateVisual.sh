@@ -8,24 +8,26 @@ echo "To update the topic words for model, copy the following map into affinityP
 echo ""
 Python topicWordsToJSMap.py
 echo ""
-echo ""
 echo "###################################################################################"
 echo ""
-echo ""
-read -n1 -p "Open affinityPlot.html? [y,n]" doit 
+read -n1 -p "Open affinityPlot.html? [y,n] " doit 
 case $doit in  
   y|Y) vi YelpAffinityPlot.html;;
   n|N) echo ;; 
   *) echo ;; 
 esac
 echo ""
+read -p "Select a cluster (Ex. 13): " cluster
 echo ""
-Python Affinity.py
-read -n1 -p "Open the visual? [y,n]" doit 
+read -p "Choose int value for top K: " topK
+Python Affinity.py $topK $cluster
+echo ""
+read -n1 -p "Open the visual? [y,n] " doit 
 case $doit in  
   y|Y) open YelpAffinityPlot.html -a firefox;; 
   n|N) echo ;; 
   *) echo ;; 
 esac
 echo ""
+echo "###################################################################################"
 echo ""

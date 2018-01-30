@@ -1,0 +1,12 @@
+{
+"links": [
+{"source":"3","target":"18","affinity":0.501773049645},
+{"source":"3","target":"17","affinity":0.454894433781},
+{"source":"3","target":"21","affinity":0.437919463087},
+{"source":"3","target":"14","affinity":0.435483870968},
+{"source":"3","target":"13","affinity":0.0},
+{"source":"3","target":"19","affinity":0.0},
+{"source":"3","target":"20","affinity":0.0},
+{"source":"3","target":"23","affinity":0.0}
+]
+}

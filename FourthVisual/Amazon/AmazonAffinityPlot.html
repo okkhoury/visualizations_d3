@@ -18,11 +18,16 @@ text {
 </style>
 
 <body>
+<p id="affinities">
 <p id="info">
       
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
+
    var info = d3.select("#info").text("Topical words:");
+
+   var affinities = d3.select("#affinities").text("Affinities: ")
+
    function readTextFile(file)
     {
         var rawFile = new XMLHttpRequest();
@@ -135,6 +140,8 @@ text {
   "89":"film, money, girl, movi, copi, time, charact, good, talk, NUM",
 }
 
+    var affinityString = "Affinities: "
+
     d3.json("AmazonAffinity.json", function(json) {
             var nodes = {};
             var links = [];
@@ -144,21 +151,26 @@ text {
                 links.push(link);
                 link.source = nodes[link.source] || (nodes[link.source] = {name: link.source, affinity: link.affinity});
                 link.target = nodes[link.target] || (nodes[link.target] = {name: link.target, affinity: link.affinity});
+
+                affinityString += "c" + link.target.name + "= " + link.affinity + ", "
               }
+
+              var affinities = d3.select("#affinities").text(affinityString)
               setup(links, nodes);
       });
     function setup(links, nodes) {
             var colorIntensityScale = [
-              "#E5E5E5",
-              "#CCCCCC",
-              "#B2B2B2",
-              "#999999",
-              "#808080",
-              "#666666",
-              "#4D4D4D",
-              "#333333",
-              "#22222A",
-              "#000000"
+              "#0000ff",
+              "#3232ff",
+              "#6666ff",
+              "#9999ff",
+              "#ccccff",
+              "#ffb2b2",
+              "#ff7f7f",
+              "#ff4c4c",
+              "#ff0000",
+              "#b20000",
+              "#7c0000"
             ];
           
           var color = d3.scale.category20();
@@ -172,7 +184,7 @@ text {
               .links(links)
               .size([width, height])
               .linkDistance(500)
-              .charge(-30)
+              .charge(-8000)
               .on("tick", tick)
               .start();
           
@@ -219,7 +231,7 @@ text {
             });
           
           node.append("circle")
-              .attr("r", 20)
+              .attr("r", 100)
               .style("fill", function(d) { 
                 //var hue = 'rgb(' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ',' + (Math.floor(Math.random() * 256)) + ')';
                 return color(d.name); 

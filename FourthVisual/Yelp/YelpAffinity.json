@@ -1,0 +1,12 @@
+{
+"links": [
+{"source":"33","target":"0","affinity":0.4},
+{"source":"33","target":"2","affinity":0.2},
+{"source":"33","target":"1","affinity":0.0},
+{"source":"33","target":"3","affinity":0.0},
+{"source":"33","target":"4","affinity":0.0},
+{"source":"33","target":"5","affinity":0.0},
+{"source":"33","target":"6","affinity":0.0},
+{"source":"33","target":"7","affinity":0.0}
+]
+}
