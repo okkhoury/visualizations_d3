@@ -207,6 +207,7 @@ text {
               .enter().append("g")
               .attr("class", "node")
               .call(force.drag);
+
           node.on('mouseover', function(d) {
             var info = d3.select("#info").text("Topical words: " + wordMap[d.name]);
                 link.style('stroke-width', function(l) {
@@ -216,6 +217,15 @@ text {
                   else
                     return .5;
                   });
+
+                link.style('stroke-dasharray', function(l) {
+                  if (l.affinity === 0) {
+                    return 10;
+                  }
+                  else
+                    return 0;
+                  });
+
                 link.style('stroke', function(l) {
                   if (d === l.source || d === l.target) {
                     return colorIntensityScale[Math.floor(l.affinity / .1)]

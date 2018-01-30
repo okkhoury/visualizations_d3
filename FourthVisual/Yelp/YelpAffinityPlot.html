@@ -133,7 +133,7 @@ text {
               "#ff4c4c",
               "#ff3232",
               "#ff1919",
-              "#ff0000"
+              "#ff0000" 
             ];
           
           var color = d3.scale.category20();
@@ -179,6 +179,15 @@ text {
                   }
                   else
                     return .5;
+                  });
+
+
+                link.style('stroke-dasharray', function(l) {
+                  if (l.affinity === 0) {
+                    return 10;
+                  }
+                  else
+                    return 0;
                   });
 
                 link.style('stroke', function(l) {
